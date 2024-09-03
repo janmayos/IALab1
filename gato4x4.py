@@ -1,46 +1,102 @@
 
 def crear_tablero():
-    tablero = [[" ", " ", " "," "],
-            [" "," "," "," "], 
-            [" "," "," "," "],
-            [" "," "," "," "]]
-    print_tablero(tablero)
-    return tablero
+	tablero = [["O", "O", "X","X"],
+			["X","O","X","X"], 
+			["X","X","O","O"],
+			["X","X","O","X"]]
+	print_tablero(tablero)
+	return tablero
 
 def print_tablero(tablero):
-    matrix_length = len(tablero)
-    for i in range(matrix_length):
-        print(tablero[i])
+	matrix_length = len(tablero)
+	for i in range(matrix_length):
+		print(tablero[i])
 
 def solicitar_coordenadas():
-    while True:
-        fila = int(input("Ingresa la fila:"))
-        if fila >= 0 and fila <=3:
-            break
-        else:
-            print("Favor de ingresar un valor del 0-3")
+	while True:
+		fila = int(input("Ingresa la fila:"))
+		if fila >= 0 and fila <=3:
+			break
+		else:
+			print("Favor de ingresar un valor del 0-3")
 
-    while True:
-        columna = int(input("Ingresa la columna:"))
-        if columna >= 0 and columna <=3:
-            break
-        else:
-            print("Favor de ingresar un valor del 0-3")
-    
-    return fila,columna
+	while True:
+		columna = int(input("Ingresa la columna:"))
+		if columna >= 0 and columna <=3:
+			break
+		else:
+			print("Favor de ingresar un valor del 0-3")
+	
+	return fila,columna
 
 def rellenar_casilla(tablero,fila,columna,valor):
-    if tablero[fila][columna] == " ":
-        tablero[fila][columna]= valor
-        print_tablero(tablero)
-    else:
-        print("Casilla ocupada volver a seleccionar coordenadas")
-        fila,columna = solicitar_coordenadas()
-        rellenar_casilla(tablero,fila,columna,valor)
+	if tablero[fila][columna] == " ":
+		tablero[fila][columna]= valor
+		print_tablero(tablero)
+	else:
+		print("Casilla ocupada volver a seleccionar coordenadas")
+		fila,columna = solicitar_coordenadas()
+		rellenar_casilla(tablero,fila,columna,valor)
 
+def eval_columnas(tablero,valor,matrix_length,matrix_length_column):
+	ban = False
+	for columna in range(matrix_length):
+		for fila in range(matrix_length_column):
+			if tablero[fila][columna] == " " or tablero[fila][columna] != valor:
+				ban=False
+				break
+			else: 
+				ban = True
+		if ban:
+			break
+	return ban
+
+def eval_filas(tablero,valor,matrix_length,matrix_length_column):
+	ban = False
+	for fila in range(matrix_length):
+		for columna in range(matrix_length_column):
+			if tablero[fila][columna] == " " or tablero[fila][columna] != valor:
+				ban=False
+				break
+			else: 
+				ban = True
+		if ban:
+			break
+	return ban
+
+def eval_diagonal(tablero,valor):
+	ban = False
+	if tablero[0][0] == valor and tablero[1][1] == valor and tablero[2][2] == valor and tablero[3][3] == valor:
+		ban =  True
+	if tablero[0][3] == valor and tablero[1][2] == valor and tablero[2][1] == valor and tablero[3][0] == valor:
+		ban =  True
+		
+	return ban
+
+
+def eval_tablero(tablero):
+	matrix_length = len(tablero)
+	matrix_length_column = len(tablero[0])
+	if eval_columnas(tablero,"X",matrix_length,matrix_length_column):
+		return "X gano en columna"
+	if(eval_columnas(tablero,"O",matrix_length,matrix_length_column)):
+		return "O gano en columna"
+	if eval_filas(tablero,"X",matrix_length,matrix_length_column):
+		return "X gano en fila"
+	if(eval_filas(tablero,"O",matrix_length,matrix_length_column)):
+		return "O gano en fila"
+	if eval_diagonal(tablero,"X"):
+		return "X gano en diagonal"
+	if(eval_diagonal(tablero,"O")):
+		return "O gano en diagonal"
+
+	return " "
 if __name__ == "__main__": 
-    tablero = crear_tablero()
-    fila,columna = solicitar_coordenadas()
-    print(fila,columna)
-    rellenar_casilla(tablero,fila,columna,"X")
-    rellenar_casilla(tablero,fila,columna,"O")
+	tablero = crear_tablero()
+	print(eval_tablero(tablero))
+	#fila,columna = solicitar_coordenadas()
+	#print(fila,columna)
+	#rellenar_casilla(tablero,fila,columna,"X")
+	#eval_tablero(tablero,("X","O"))
+	#rellenar_casilla(tablero,fila,columna,"O")
+	#eval_tablero(tablero,("X","O"))
