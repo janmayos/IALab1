@@ -1,4 +1,6 @@
 
+import random
+
 def crear_tablero():
 	tablero = [[" ", " ", " "," "],
 			[" ", " ", " "," "], 
@@ -100,7 +102,18 @@ def es_ganador(tablero):
 		print("El jugador " + mensaje)
 	return True
 
-if __name__ == "__main__": 
+
+def generar_aleatorios_rellenar(tablero,valor):
+	while True:
+		fila = random.randint(0, 3)
+		columna = random.randint(0, 3)
+		if tablero[fila][columna] == " ":
+			tablero[fila][columna]= valor
+			print(fila,columna)
+			break
+	print_tablero(tablero)
+
+def iniciar_juego_gato():
 	tablero = crear_tablero()
 	while(True):
 		fila,columna = solicitar_coordenadas()
@@ -108,8 +121,11 @@ if __name__ == "__main__":
 		rellenar_casilla(tablero,fila,columna,"X")
 		if es_ganador(tablero):
 			break
-		fila,columna = solicitar_coordenadas()
-		rellenar_casilla(tablero,fila,columna,"O")
+		#fila,columna = solicitar_coordenadas()
+		#rellenar_casilla(tablero,fila,columna,"O")
+		generar_aleatorios_rellenar(tablero,"0")
 		if es_ganador(tablero):
 			break
-	#eval_tablero(tablero,("X","O"))
+
+if __name__ == "__main__": 
+	iniciar_juego_gato()
