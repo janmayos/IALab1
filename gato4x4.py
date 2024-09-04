@@ -94,12 +94,26 @@ def eval_tablero(tablero):
 
 	return " "
 
+
+def esta_lleno(tablero):
+	matrix_length = len(tablero)
+	matrix_length_column = len(tablero[0])
+	for fila in range(matrix_length):
+		for columna in range(matrix_length_column):
+			if tablero[fila][columna] == " ":
+				return False
+	return True
+
 def es_ganador(tablero):
-	mensaje = eval_tablero(tablero) 
-	if mensaje == " ":
-		return False
+	
+	mensaje = eval_tablero(tablero)
+	if esta_lleno(tablero):
+		print("Es un empate")
 	else:
-		print("El jugador " + mensaje)
+		if mensaje == " ":
+			return False
+		else:
+			print("El jugador " + mensaje)
 	return True
 
 
@@ -126,6 +140,7 @@ def iniciar_juego_gato():
 		generar_aleatorios_rellenar(tablero,"0")
 		if es_ganador(tablero):
 			break
+
 
 if __name__ == "__main__": 
 	iniciar_juego_gato()
