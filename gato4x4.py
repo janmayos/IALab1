@@ -1,9 +1,9 @@
 
 def crear_tablero():
-	tablero = [["O", "O", "X","X"],
-			["X","O","X","X"], 
-			["X","X","O","O"],
-			["X","X","O","X"]]
+	tablero = [[" ", " ", " "," "],
+			[" ", " ", " "," "], 
+			[" ", " ", " "," "],
+			[" ", " ", " "," "]]
 	print_tablero(tablero)
 	return tablero
 
@@ -91,12 +91,25 @@ def eval_tablero(tablero):
 		return "O gano en diagonal"
 
 	return " "
+
+def es_ganador(tablero):
+	mensaje = eval_tablero(tablero) 
+	if mensaje == " ":
+		return False
+	else:
+		print("El jugador " + mensaje)
+	return True
+
 if __name__ == "__main__": 
 	tablero = crear_tablero()
-	print(eval_tablero(tablero))
-	#fila,columna = solicitar_coordenadas()
-	#print(fila,columna)
-	#rellenar_casilla(tablero,fila,columna,"X")
-	#eval_tablero(tablero,("X","O"))
-	#rellenar_casilla(tablero,fila,columna,"O")
+	while(True):
+		fila,columna = solicitar_coordenadas()
+		print(fila,columna)
+		rellenar_casilla(tablero,fila,columna,"X")
+		if es_ganador(tablero):
+			break
+		fila,columna = solicitar_coordenadas()
+		rellenar_casilla(tablero,fila,columna,"O")
+		if es_ganador(tablero):
+			break
 	#eval_tablero(tablero,("X","O"))
