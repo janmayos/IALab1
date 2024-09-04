@@ -16,5 +16,12 @@ def menu():
 	return opcion
 
 if __name__ == "__main__": 
-	opcion = menu()
-	print(opcion)
+	while True:
+		opcion = menu()
+		if opcion == 1:
+			runMinimos()
+		elif opcion == 2:
+			iniciar_juego_gato()
+		else:
+			print("Gracias por jugar")
+			exit(0)
